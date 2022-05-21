@@ -1,11 +1,42 @@
 import { Link } from 'react-router-dom';
-import Form from './form';
-const Home=()=>{
+import { useState} from 'react';
+import { useEffect } from 'react';
+import {collection, getDocs} from 'firebase/firestore';
+import {db} from '../assest/fireConfig';
+const Todolist=()=>{
+    const [posts,setPosts]= useState([]);
+useEffect(()=>{
+     /*fetch('http://localhost:5000/posts')
+     .then(res=>{
+        return res.json();
+     })
+     .then(data=>{
+        setPosts(data)
+     });*/
+ const getTodo=async()=>{
+const todoCollection=collection(db,"posts")
+const data =await getDocs(todoCollection);
+//console.log(data)
+setPosts(data.docs.map((doc)=>({...doc.data(),id:doc.id})))
+ }
+getTodo();
+},[])
+
+
     return(
-   <>
-   <Link to='/todolist'><button className='btn' style={{backgroundColor:'#282c34',color:'white',fontFamily:'cursive',margin:'0 5% 0 85%'}}>View List</button></Link>
-   <Form/>
-   </>
+        <div>
+           <Link to='/createList'><button className='btn1' style={{backgroundColor:'#282c34',color:'white',fontFamily:'cursive',margin:'0 5% 0 85%'}}>Add  Task</button></Link>
+     {posts.map((post)=>{
+        return(
+         <div className='list'key={post.id}> {""}
+         <p>{post.date}</p>
+         <p>{post.task1}</p>
+         <p>{post.task2}</p>
+         <p>{post.task3}</p>
+         </div>
+        )
+     })} 
+        </div>
     )
 }
-export default Home;
+export default Todolist;
