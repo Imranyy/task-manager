@@ -7,6 +7,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.active{
+  background-color: rgb(226, 226, 226);
+}
 
 .App {
   text-align: center;

@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-import { useState} from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import Cardnote from './Card'
 import {collection, getDocs, deleteDoc, doc} from 'firebase/firestore';
 import {db} from '../assest/fireConfig';
@@ -35,8 +33,7 @@ const handleDelete=async(id)=>{
 
     return(
         <Container style={{marginTop:'90px'}}>
-           <Link to='/createList'><button className='btn1' style={{backgroundColor:'#282c34',color:'white',fontFamily:'cursive',margin:'0 5% 0 85%'}}>Add</button></Link>
-         <Grid container spacing={3}>
+          <Grid container spacing={3}>
          {posts.map((post)=>(
             <Grid item xs={12} md={6} lg={4}  key={post.id}>
                <Cardnote post={post} handleDelete={handleDelete}/>
