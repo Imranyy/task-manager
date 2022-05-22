@@ -84,7 +84,7 @@ const Form=()=>{
         />
         <FormControl>
           <FormLabel>Categories</FormLabel>
-        <RadioGroup style={{marginLeft:'-70%'}} value={category} onChange={(e)=>setCategory(e.target.value)}>
+        <RadioGroup style={{marginLeft:'-75%'}} value={category} onChange={(e)=>setCategory(e.target.value)}>
           <FormControlLabel value='todos' control={<Radio color='secondary'/>} label='Todo'/>
           <FormControlLabel value='work' control={<Radio color='secondary'/>} label='Work'/>
           <FormControlLabel value='reminders' control={<Radio color='secondary'/>} label='Reminder'/>

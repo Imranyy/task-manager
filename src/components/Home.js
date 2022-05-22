@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState} from 'react';
 import { useEffect } from 'react';
-import {collection, getDocs} from 'firebase/firestore';
+import Cardnote from './Card'
+import {collection, getDocs, deleteDoc, doc} from 'firebase/firestore';
 import {db} from '../assest/fireConfig';
+import { Container} from '@mui/system';
+import { Grid} from '@mui/material';
 const Todolist=()=>{
     const [posts,setPosts]= useState([]);
 useEffect(()=>{
@@ -22,21 +25,26 @@ setPosts(data.docs.map((doc)=>({...doc.data(),id:doc.id})))
 getTodo();
 },[])
 
+const handleDelete=async(id)=>{
+    const deleteTodo=doc(db,'posts',id);
+    await deleteDoc(deleteTodo);
+    
+    const newPosts=posts.filter(post=>post.id !== id)
+    setPosts(newPosts);
+}
 
     return(
-        <div>
-           <Link to='/createList'><button className='btn1' style={{backgroundColor:'#282c34',color:'white',fontFamily:'cursive',margin:'0 5% 0 85%'}}>Add  Task</button></Link>
-     {posts.map((post)=>{
-        return(
-         <div className='list'key={post.id}> {""}
-         <p>{post.date}</p>
-         <p>{post.task1}</p>
-         <p>{post.task2}</p>
-         <p>{post.task3}</p>
-         </div>
-        )
-     })} 
-        </div>
+        <Container style={{marginTop:'90px'}}>
+           <Link to='/createList'><button className='btn1' style={{backgroundColor:'#282c34',color:'white',fontFamily:'cursive',margin:'0 5% 0 85%'}}>Add</button></Link>
+         <Grid container spacing={3}>
+         {posts.map((post)=>(
+            <Grid item xs={12} md={6} lg={4}  key={post.id}>
+               <Cardnote post={post} handleDelete={handleDelete}/>
+            </Grid>
+            )
+         )} 
+         </Grid>
+        </Container>
     )
 }
 export default Todolist;
